@@ -10,6 +10,7 @@ function App() {
 
 	const [ theme, setTheme ] = useState(0);
 	const [ input, setInput ] = useState('');
+	const [ showText, setShowText ] = useState(false);
 	const [ hashed, setHashed ] = useState('');
 
 	// Get app theme from localStorage and apply it to state.
@@ -21,7 +22,7 @@ function App() {
 	const handleHash = (e) => {
 		e.preventDefault();
 		if([input].includes('')) {
-			toast.success('You must type a password or words to hash', {
+			toast.error('You must type a password or words to hash', {
 				position: "top-right",
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -71,7 +72,12 @@ function App() {
 				<div className='flex flex-col gap-10 px-2 w-[18rem] sm:w-[27rem]'>
 					<form className='flex flex-col gap-5' onSubmit={(e) => handleHash(e)}>
 						<div className={`${ !theme ? ' text-[#1A1A1A]' : 'text-zinc-300' } transition-colors text-center text-5xl font-normal uppercase` }>Sha256 Hasher</div>
-						<input className={`${ theme ? ' bg-[#343434] text-gray-300 border-transparent' : 'bg-white' } border rounded p-2 outline-none transition-colors`} type="password" placeholder='Words to hash' onChange={(e) => setInput(e.target.value)} value={input} />
+						<div className={'relative'}>
+							<input className={`w-full ${theme ? ' bg-[#343434] text-gray-300 border-transparent' : 'bg-white'} border rounded p-2 outline-none transition-colors`} type={showText ? 'text': 'password'} placeholder='Words to hash' onChange={(e) => setInput(e.target.value)} value={input} />
+							<button onClick={() => setShowText(!showText)} type={'button'}>
+								<i className={`absolute right-2 top-1/2 -translate-y-1/2 fa-light ${showText ? 'fa-eye-slash' : 'fa-eye'} ${theme == 0 ? 'text-black' : 'text-white'} transition-colors`}></i>
+							</button>
+						</div>
 						<button type='submit' className={`${ theme ? 'bg-[#424242] hover:bg-[#343434] text-gray-300' : 'bg-sky-500 hover:bg-sky-600' } p-2 cursor-pointer text-white text-xl rounded font-semibold transition-all`}>Hash</button>
 					</form>
 					{hashed && (

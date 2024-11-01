@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "hasher": "file:../sha256-passwords-hasher",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-toastify": "^9.1.1",
